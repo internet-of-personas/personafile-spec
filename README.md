@@ -344,7 +344,7 @@ This schema defines the required and optional fields for a valid Personafile.
     }
   }
 }
-
+```
 ---
 
 ## 7. Example Personafile
