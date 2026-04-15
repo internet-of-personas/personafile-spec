@@ -183,19 +183,20 @@ Example:
 
 ### `views`
 
-An array of shared interaction surfaces where humans and the persona collaborate simultaneously. It defines both the machine-readable state and the human-readable render format.
+A mapping of shared interaction view names to external schema or contract documents that define the structured state a persona and client may read or write collaboratively.
+
+The Personafile declares the shared data contract for each view. It does not dictate how a client should render that data for humans. Rendering remains the responsibility of the client.
+
+Each value in `views` should be a URL pointing to the schema or contract document for that view. The referenced document format is implementation-defined and may use JSON, YAML, XML, HTML, or another compatible machine-readable format.
 
 Example:
 
 ```json
-"views": [
-  {
-    "name": "blueprint_canvas",
-    "data_format": "application/json",
-    "render_format": "image/svg+xml"
-  }
-]
-```
+"views": {
+  "blueprint_canvas": "https://architect.example.com/schemas/views/blueprint-canvas.json"
+}
+
+
 
 ### `state_mode`
 
@@ -308,28 +309,6 @@ This schema defines the required and optional fields for a valid Personafile.
       },
       "required": ["message"]
     },
-    "views": {
-      "type": "array",
-      "description": "Shared interaction surfaces where humans and the persona collaborate simultaneously.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the interactive view."
-          },
-          "data_format": {
-            "type": "string",
-            "description": "The machine-readable state format the persona reads or writes."
-          },
-          "render_format": {
-            "type": "string",
-            "description": "The human-readable format rendered for the user."
-          }
-        },
-        "required": ["name", "data_format"]
-      }
-    },
     "state_mode": {
       "type": "string",
       "enum": ["stateless", "session", "hybrid"],
@@ -377,13 +356,14 @@ This is an example of a valid `personafile.json` document.
     "message": "https://architect.example.com/api/v1/pxp/message",
     "event": "wss://architect.example.com/api/v1/pxp/events"
   },
-  "views": [
-    {
-      "name": "blueprint_canvas",
-      "data_format": "application/json",
-      "render_format": "image/svg+xml"
-    }
-  ],
+  "views": {
+  "type": "object",
+  "description": "A mapping of shared interaction view names to external schema or contract documents defining the structured state shared between a persona and a client.",
+  "additionalProperties": {
+    "type": "string",
+    "format": "uri",
+    "description": "A URL pointing to the schema or contract document for this view. The document format is implementation-defined and may be JSON, YAML, XML, HTML, or another compatible format."
+  },
   "state_mode": "session",
   "capabilities": [
     "structural_validation",
