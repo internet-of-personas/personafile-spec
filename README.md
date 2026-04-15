@@ -309,6 +309,15 @@ This schema defines the required and optional fields for a valid Personafile.
       },
       "required": ["message"]
     },
+    "views": {
+      "type": "object",
+      "description": "A mapping of shared interaction view names to external schema or contract documents defining the structured state shared between a persona and a client.",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri",
+        "description": "A URL pointing to the schema or contract document for this view. The document format is implementation-defined and may be JSON, YAML, XML, HTML, or another compatible format."
+      }
+    },
     "state_mode": {
       "type": "string",
       "enum": ["stateless", "session", "hybrid"],
@@ -335,7 +344,6 @@ This schema defines the required and optional fields for a valid Personafile.
     }
   }
 }
-```
 
 ---
 
