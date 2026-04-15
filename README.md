@@ -195,7 +195,7 @@ Example:
 "views": {
   "blueprint_canvas": "https://architect.example.com/schemas/views/blueprint-canvas.json"
 }
-
+```
 
 
 ### `state_mode`
